@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ambrin64/devops_assignment.git'
+                git branch: 'main', url: 'https://github.com/ambrin64/devops_assignment.git'
             }
         }
 
@@ -17,13 +17,7 @@ pipeline {
         stage('Run SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    bat '''
-                    sonar-scanner ^
-                    -Dsonar.projectKey=devops_assignment ^
-                    -Dsonar.sources=. ^
-                    -Dsonar.host.url=http://localhost:9000 ^
-                    -Dsonar.login=squ_15bb93a8be009f9fbd172b3de3c23fb83bc1f32b
-                    '''
+                    bat 'sonar-scanner -Dsonar.projectKey=devops_assignment -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000'
                 }
             }
         }
